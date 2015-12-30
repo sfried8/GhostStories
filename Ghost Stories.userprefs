@@ -1,0 +1,19 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Classes\Player.cs">
+    <Files>
+      <File FileName="Assets\Classes\Player.cs" Line="68" Column="22" />
+      <File FileName="Assets\Classes\GS.cs" Line="26" Column="1" />
+      <File FileName="Assets\Classes\Ghost.cs" Line="1" Column="1" />
+      <File FileName="Assets\Classes\Options.cs" Line="5" Column="1" />
+      <File FileName="Assets\Classes\VillageTile.cs" Line="8" Column="8" />
+      <File FileName="Assets\Classes\Pool.cs" Line="27" Column="13" />
+      <File FileName="Assets\Classes\TaoManager.cs" Line="30" Column="19" />
+      <File FileName="Assets\Classes\PlayerManager.cs" Line="22" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
