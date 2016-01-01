@@ -20,6 +20,7 @@ public class PlayerManager : MonoBehaviour {
 	}
 	IEnumerator Start(){
 		currentTurn = -1;
+        yield return new WaitForSeconds(0.5f);
         while ( currentTurn < 15 )
         {
 		     yield return nextTurn ();

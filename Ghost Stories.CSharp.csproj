@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -68,19 +70,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Classes\GS.cs" />
-    <Compile Include="Assets\Classes\Game.cs" />
-    <Compile Include="Assets\Classes\GameBoard.cs" />
-    <Compile Include="Assets\Classes\Ghost.cs" />
-    <Compile Include="Assets\Classes\Options.cs" />
-    <Compile Include="Assets\Classes\Player.cs" />
-    <Compile Include="Assets\Classes\PlayerBoard.cs" />
-    <Compile Include="Assets\Classes\PlayerManager.cs" />
-    <Compile Include="Assets\Classes\Pool.cs" />
-    <Compile Include="Assets\Classes\QiPool.cs" />
-    <Compile Include="Assets\Classes\TaoManager.cs" />
-    <Compile Include="Assets\Classes\VillageTiles\VT_Graveyard.cs" />
-    <Compile Include="Assets\Classes\VillageTiles\VillageTile.cs" />
+    <Compile Include="Assets\Classes\Scripts\GameBoard\GameBoardModelManager.cs" />
+    <Compile Include="Assets\Classes\Scripts\GS.cs" />
+    <Compile Include="Assets\Classes\Scripts\Game.cs" />
+    <Compile Include="Assets\Classes\Scripts\GameBoard\GameBoard.cs" />
+    <Compile Include="Assets\Classes\Scripts\GameBoard\GridSpace.cs" />
+    <Compile Include="Assets\Classes\Scripts\GameBoard\GridSpaceManager.cs" />
+    <Compile Include="Assets\Classes\Scripts\Ghost.cs" />
+    <Compile Include="Assets\Classes\Scripts\Options.cs" />
+    <Compile Include="Assets\Classes\Scripts\Player.cs" />
+    <Compile Include="Assets\Classes\Scripts\PlayerBoard.cs" />
+    <Compile Include="Assets\Classes\Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\Classes\Scripts\Pool.cs" />
+    <Compile Include="Assets\Classes\Scripts\QiPool.cs" />
+    <Compile Include="Assets\Classes\Scripts\TaoManager.cs" />
+    <Compile Include="Assets\Classes\Scripts\VillageTiles\VT_Graveyard.cs" />
+    <Compile Include="Assets\Classes\Scripts\VillageTiles\VillageTile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

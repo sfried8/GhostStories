@@ -2,7 +2,7 @@
 using System.Collections;
 
 public abstract class Ghost : MonoBehaviour {
-	private string name;
+
 	private GS.Color color;
 	private int resistance;
 	private int haunterPosition;

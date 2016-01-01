@@ -4,10 +4,7 @@ using System;
 
 public class VT_Graveyard : VillageTile
 {
-    public VT_Graveyard( string tname) : base(tname)
-    {
-        ;
-    }
+
 
     public override bool canPerformAction(Player player)
     {
