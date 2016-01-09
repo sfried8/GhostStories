@@ -32,7 +32,20 @@ public class GameBoard : MonoBehaviour {
         return false;
     }
 
-   
+   public IEnumerator attemptExorcism( Player player )
+    {
+        List<PlayerBoardSpace> attackableGhosts = gridSpaceManager.getAttackableGhostSpaces(player);
+        foreach ( PlayerBoardSpace pbs in attackableGhosts )
+        {
+            if ( pbs.hasGhost() )
+            {
+                GS.displayInfoMessage("Exorcising " + pbs.Ghost.GhostName);
+                yield return new WaitForSeconds(0.3f);
+                pbs.exorciseGhost();
+            }
+        }
+        yield return null;
+    }
 
     public VillageTile getCurrentTile( Player player )
     {

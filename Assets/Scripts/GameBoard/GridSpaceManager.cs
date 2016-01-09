@@ -17,6 +17,58 @@ public class GridSpaceManager : MonoBehaviour{
     private PlayerBoard bottomBoard;
     private PlayerBoard rightBoard;
 
+    public PlayerBoard TopBoard
+    {
+        get
+        {
+            return topBoard;
+        }
+
+        set
+        {
+            topBoard = value;
+        }
+    }
+
+    public PlayerBoard LeftBoard
+    {
+        get
+        {
+            return leftBoard;
+        }
+
+        set
+        {
+            leftBoard = value;
+        }
+    }
+
+    public PlayerBoard BottomBoard
+    {
+        get
+        {
+            return bottomBoard;
+        }
+
+        set
+        {
+            bottomBoard = value;
+        }
+    }
+
+    public PlayerBoard RightBoard
+    {
+        get
+        {
+            return rightBoard;
+        }
+
+        set
+        {
+            rightBoard = value;
+        }
+    }
+
     void Start()
     {
         GameObject[] allBoards = GameObject.FindGameObjectsWithTag("_PlayerBoard");
@@ -25,19 +77,19 @@ public class GridSpaceManager : MonoBehaviour{
             PlayerBoard pb = go.GetComponent<PlayerBoard>();
             if ( pb.side == PlayerBoard.Side.TOP )
             {
-                topBoard = pb;
+                TopBoard = pb;
             }
             if (pb.side == PlayerBoard.Side.LEFT)
             {
-                leftBoard = pb;
+                LeftBoard = pb;
             }
             if (pb.side == PlayerBoard.Side.BOTTOM)
             {
-                bottomBoard = pb;
+                BottomBoard = pb;
             }
             if (pb.side == PlayerBoard.Side.RIGHT)
             {
-                rightBoard = pb;
+                RightBoard = pb;
             }
         }
     }
@@ -62,7 +114,7 @@ public class GridSpaceManager : MonoBehaviour{
         }
         return null;
     }
-    private GridSpace findByRowCol(GridSpace.GridSpaceRow r, GridSpace.GridSpaceCol c)
+    public GridSpace findByRowCol(GridSpace.GridSpaceRow r, GridSpace.GridSpaceCol c)
     {
         foreach (GridSpace gridSpace in gridSpaceList)
         {
@@ -193,31 +245,35 @@ public class GridSpaceManager : MonoBehaviour{
         GameBoardModelManager.initializeBoardWithPlayersAtCenter(gridSpaceList);
     }
 
-    private List<PlayerBoardSpace> getAttackableGhostSpaces(GridSpace origin)
+    public List<PlayerBoardSpace> getAttackableGhostSpaces(Player player)
+    {
+        return getAttackableGhostSpaces(getPlayerPosition(player));
+    }
+    public List<PlayerBoardSpace> getAttackableGhostSpaces(GridSpace origin)
     {
         List<PlayerBoardSpace> spaces = new List<PlayerBoardSpace>();
         if ( origin.GridSpacePosition.col == GridSpace.GridSpaceCol.Left)
         {
             if ( origin.GridSpacePosition.row == GridSpace.GridSpaceRow.Top )
             {
-                spaces.Add(topBoard.rightSpace);
-                spaces.Add(leftBoard.leftSpace);
+                spaces.Add(TopBoard.rightSpace);
+                spaces.Add(LeftBoard.leftSpace);
             }
             else if ( origin.GridSpacePosition.row == GridSpace.GridSpaceRow.Center )
             {
-                spaces.Add(leftBoard.middleSpace);
+                spaces.Add(LeftBoard.middleSpace);
             }
             else
             {
-                spaces.Add(leftBoard.rightSpace);
-                spaces.Add(bottomBoard.leftSpace);
+                spaces.Add(LeftBoard.rightSpace);
+                spaces.Add(BottomBoard.leftSpace);
             }
         }
         else if ( origin.GridSpacePosition.col == GridSpace.GridSpaceCol.Center)
         {
             if (origin.GridSpacePosition.row == GridSpace.GridSpaceRow.Top)
             {
-                spaces.Add(topBoard.middleSpace);
+                spaces.Add(TopBoard.middleSpace);
             }
             else if (origin.GridSpacePosition.row == GridSpace.GridSpaceRow.Center)
             {
@@ -225,27 +281,27 @@ public class GridSpaceManager : MonoBehaviour{
             }
             else
             {
-                spaces.Add(bottomBoard.middleSpace);
+                spaces.Add(BottomBoard.middleSpace);
             }
         }
         else
         {
             if (origin.GridSpacePosition.row == GridSpace.GridSpaceRow.Top)
             {
-                spaces.Add(rightBoard.rightSpace);
-                spaces.Add(topBoard.leftSpace);
+                spaces.Add(RightBoard.rightSpace);
+                spaces.Add(TopBoard.leftSpace);
             }
             else if (origin.GridSpacePosition.row == GridSpace.GridSpaceRow.Center)
             {
-                spaces.Add(rightBoard.middleSpace);
+                spaces.Add(RightBoard.middleSpace);
             }
             else
             {
-                spaces.Add(rightBoard.leftSpace);
-                spaces.Add(bottomBoard.rightSpace);
+                spaces.Add(RightBoard.leftSpace);
+                spaces.Add(BottomBoard.rightSpace);
             }
         }
 
-        return spaces.Where(space => !space.hasGhost()).ToList();
+        return spaces.Where(space => space.hasGhost()).ToList();
     }
 }

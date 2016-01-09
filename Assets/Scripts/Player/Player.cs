@@ -9,21 +9,35 @@ public class Player : MonoBehaviour {
     private Pool buddhaPool;
     private TaoManager taoManager;
     private GameBoard gameBoard;
-    private PlayerBoard playerBoard;
+    public PlayerBoard playerBoard;
+    private PlayerManager playerManager;
     private bool hasYinYang;
+
+    public Pool QiPool
+    {
+        get
+        {
+            return qiPool;
+        }
+
+        set
+        {
+            qiPool = value;
+        }
+    }
 
 
 
     // Use this for initialization
     void Start() {
         io = gameObject.GetComponent<PlayerIO>();
-        qiPool = new Pool(4);
+        QiPool = new Pool(4);
         taoManager = new TaoManager();
         taoManager.addTao(color, 1);
         taoManager.addTao(GS.Color.BLACK, 1);
         hasYinYang = true;
         gameBoard = GameObject.FindGameObjectWithTag("_GameBoard").GetComponent<GameBoard>();
-
+        playerManager = GameObject.FindGameObjectWithTag("_PlayerManager").GetComponent<PlayerManager>();
     }
 
 
@@ -80,7 +94,7 @@ public class Player : MonoBehaviour {
                 GS.displayInfoMessage(currentTile.tilename + " is busy, try again later.");
                 break;
             case "X":
-                GS.displayInfoMessage("Attempting Exorcism");
+                yield return StartCoroutine(gameBoard.attemptExorcism(this));
                 break;
             case "B":
                 GS.displayInfoMessage("Passing turn");
@@ -92,9 +106,45 @@ public class Player : MonoBehaviour {
     }
 
 
+    IEnumerator YinPhase()
+    {
+        io.startHoverInfo();
+        yield return StartCoroutine(playerBoard.performGhostActions());
+        yield return StartCoroutine(drawGhost());
+        io.stopHoverInfo();
+    }
+
+    IEnumerator drawGhost()
+    {
+        Ghost ghost = playerManager.drawGhost();
+        io.displayCurrentActionInfo(ghost.GhostName+"\nColor: "+ghost.color+"\nResistance: "+ghost.Resistance);
+        while (true) {
+            GSCoroutine<GameObject> clickedGSC = io.getClickedGameObject("_PlayerBoardSpace");
+            yield return clickedGSC.coroutine;
+            while (clickedGSC.result == null)
+            {
+                yield return null;
+            }
+            PlayerBoardSpace pbs = clickedGSC.result.GetComponent<PlayerBoardSpace>();
+            if (!pbs.hasGhost())
+            {
+                pbs.addGhost(ghost);
+                break;
+            }
+            else
+            {
+                yield return StartCoroutine(io.displayNotificationMessage("You must choose an empty space!"));
+            }
+            yield return null;
+        }
+        io.clearCurrentActionInfo();
+    }
+
+
 
 
     public IEnumerator takeTurn() {
+        yield return StartCoroutine(YinPhase());
         yield return StartCoroutine(MovePhase());
         yield return StartCoroutine(VillagerPhase());
         io.stopHoverInfo();
@@ -102,7 +152,7 @@ public class Player : MonoBehaviour {
     }
 
     public bool isAlive() {
-        return qiPool.isEmpty();
+        return QiPool.isEmpty();
     }
 
 

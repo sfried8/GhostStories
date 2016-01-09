@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerIO : MonoBehaviour {
 
     private MouseInfoMessage mouseInfoMessage;
     private NotificationScript notification;
+    private CurrentActionInfo currentActionInfo;
+    private Selection selection;
 
     void Start()
     {
         mouseInfoMessage = GameObject.FindGameObjectWithTag("_MouseInfoMessage").GetComponent<MouseInfoMessage>();
         notification = GameObject.FindGameObjectWithTag("_Notification").GetComponent<NotificationScript>();
+        currentActionInfo = GameObject.FindGameObjectWithTag("Respawn").GetComponent<CurrentActionInfo>();
+        selection = GameObject.FindGameObjectWithTag("_CurrentActionInfo").GetComponent<Selection>();
+
     }
     IEnumerator GetInputClick(string tag)
     {
@@ -30,7 +36,8 @@ public class PlayerIO : MonoBehaviour {
 
     public GSCoroutine<GameObject> getClickedGameObject(string tag)
     {
-        return new GSCoroutine<GameObject>(this, GetInputClick(tag));
+        return new GSCoroutine<GameObject>(this, selection.getSelectionCR(tag));
+        //return new GSCoroutine<GameObject>(this, GetInputClick(tag));
     }
 
     public GSCoroutine<string> getButtonPressDialog(string message, string[] options, string[] buttons)
@@ -47,6 +54,18 @@ public class PlayerIO : MonoBehaviour {
         StopCoroutine("HoverInfo");
         mouseInfoMessage.clearMessage();
     }
+    public void displayCurrentActionInfo(string message)
+    {
+        currentActionInfo.displayMessage(message);
+    }
+    public void clearCurrentActionInfo()
+    {
+        currentActionInfo.clearMessage();
+    }
+    public IEnumerator displayNotificationMessage(string message)
+    {
+        return notification.displayNotification(message);
+    }
     IEnumerator HoverInfo()
     {
         while (true)
@@ -60,6 +79,15 @@ public class PlayerIO : MonoBehaviour {
                 if (hit.collider.gameObject.CompareTag("_VillageTile"))
                 {
                     mouseInfoMessage.displayMessage(hit.collider.gameObject.GetComponent<GridSpace>().VillageTile.tilename);
+                }
+                else if (hit.collider.gameObject.CompareTag("_PlayerBoardSpace"))
+                {
+                    PlayerBoardSpace pbs = hit.collider.gameObject.GetComponent<PlayerBoardSpace>();
+                    mouseInfoMessage.displayMessage(pbs.hasGhost() ? "Gh-gh-gh-ghost!" : "Open Space");
+                }
+                else
+                {
+                    mouseInfoMessage.clearMessage();
                 }
 
             }
@@ -85,9 +113,7 @@ public class PlayerIO : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit))
             {
-                //print out the name if the raycast hits something
-                Debug.Log(hit.collider.name);
-                //freeclup= hit.collider.name;
+
                 if (hit.collider.gameObject.CompareTag(tag))
                 {
                     return hit.collider.gameObject;
@@ -97,5 +123,7 @@ public class PlayerIO : MonoBehaviour {
         }
         return null;
     }
+
+
 
 }

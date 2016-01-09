@@ -6,9 +6,14 @@ public class PlayerManager : MonoBehaviour {
 	public List<Player> players;
 	public int currentTurn;
     public NotificationScript notification;
+    public Deck deck;
 
+    public Ghost drawGhost()
+    {
+        return deck.drawGhost();
+    }
 
-	IEnumerator nextTurn() {
+    IEnumerator nextTurn() {
         currentTurn++;
         Player current = players[currentTurn % players.Count];
         yield return StartCoroutine(notification.displayNotification("It is now " + current.displayName() + "'s turn."));
